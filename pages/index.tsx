@@ -14,7 +14,7 @@ const Tree = dynamic(() => import("react-d3-tree"), {
 });
 
 export function bfs(
-  id: string,
+  id: string | number | boolean,
   tree: RawNodeDatum | RawNodeDatum[],
   node: RawNodeDatum
 ) {
@@ -41,24 +41,28 @@ export function bfs(
 
 export default function Home() {
   const [tree, setTree] = useState<RawNodeDatum | RawNodeDatum[]>({
-    name: "Root",
+    name: "World",
     attributes: {
       id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f",
     },
     children: [
       {
-        name: "Root 1.1",
+        name: "Asia",
         attributes: {
           id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f2",
         },
-        children: [],
+        children: [
+         
+        ],
       },
       {
-        name: "Root 1.2",
+        name: "Europe",
         attributes: {
           id: "411d9783-85ba-41e5-a6a3-5e1cca3d294f3",
         },
-        children: [],
+        children: [
+       
+        ],
       },
     ],
   });
@@ -93,29 +97,28 @@ export default function Home() {
     const { nodeDatum } = customProps;
 
     return (
-      <g>
-        <circle r="15" fill={"#777"} onClick={() => click(nodeDatum)} />
-        <text fill="black" strokeWidth="0.5" x="20" y="-5">
-          {nodeDatum.name}
-        </text>
+      <g onClick={() => click(nodeDatum)}>
+        <circle fill="black" r="35"  />
+        <text stroke="white" stroke-width="1px" text-anchor="middle" alignment-baseline="central"> {nodeDatum.name}</text>
       </g>
     );
   };
 
   return (
     <Stack direction="row" spacing="md">
-      <Box w="100%" h="100vh">
+      <Box w="100%" h="100vh" >
         <Tree
           data={tree}
           zoomable={true}
           onNodeClick={handleNodeClick}
           translate={{
-            x: 200,
-            y: 200,
+            x: 500,
+            y: 300
           }}
           renderCustomNodeElement={(nodeInfo) =>
             renderRectSvgNode(nodeInfo, handleNodeClick)
           }
+          orientation="vertical"
         />
         <NodeModal
           onSubmit={(familyMemberName) => handleSubmit(familyMemberName)}
